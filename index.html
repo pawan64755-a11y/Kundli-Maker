@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="hi"><head><meta charset="utf-8"><title>वैदिक कुंडली – AI के लिए</title>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Vedic Kundli for AI</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>
 :root{--bg:#fbf8f2;--fg:#231a36;--card:#efe7f7;--ac:#7a2f8f;--ln:#9a6b2f;--or:#c4560a;--bd:#cdbfe0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -20,9 +20,17 @@ svg text{fill:var(--fg)}.sn{fill:var(--or)!important;font-weight:700}
 .w{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:13px}td,th{padding:4px 6px;border-bottom:1px solid var(--bd);text-align:left;white-space:nowrap}
 textarea{min-height:260px;font:12px/1.4 ui-monospace,monospace}
 .n{font-size:12px;opacity:.8}
+ol{padding-left:20px;margin:8px 0}li{margin:5px 0}summary{cursor:pointer}
 </style></head><body>
-<h1>वैदिक कुंडली – AI के लिए</h1>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h1>वैदिक कुंडली – AI के लिए</h1><button id="lg" style="width:auto;margin:0;padding:6px 12px">English</button></div>
+<details class="card" id="how" open><summary><b>इस टूल का उपयोग कैसे करें</b></summary><ol>
+<li>जन्म तारीख, जन्म समय और जन्म स्थान भरें। जगह का नाम खोजकर सूची से सही जगह चुनें। समय जन्म प्रमाणपत्र के अनुसार डालें।</li>
+<li>अपना विषय चुनें (प्रेम, करियर, आज का राशिफल आदि) और जवाब का तरीका चुनें। सीधा और सरल जवाब उन लोगों के लिए है जिन्हें ज्योतिष की जानकारी नहीं है।</li>
+<li>अपना सवाल साफ़ लिखें। एक बार में एक ही सवाल पूछें और अपनी स्थिति भी बताएँ, जैसे उम्र, रिश्ते की स्थिति या काम।</li>
+<li>सबमिट दबाएँ। सबसे ऊपर कॉपी करने वाला टेक्स्ट आ जाएगा।</li>
+<li>"AI के लिए कॉपी करो" दबाएँ, फिर किसी भी AI चैट (जैसे ChatGPT, Claude या Gemini) में पेस्ट करके भेज दें। जवाब वहीं मिलेगा।</li></ol></details>
 <div class="card">
+<div id="pfw" hidden><label>सेव की हुई प्रोफाइल</label><div class="r" style="grid-template-columns:1fr auto"><select id="pf"></select><button id="pd" style="margin:0;width:auto;background:var(--card);color:var(--fg);border:1px solid var(--bd)">प्रोफाइल हटाओ</button></div></div>
 <label>नाम (वैकल्पिक)</label><input id="nm">
 <div class="r"><div><label>जन्म तारीख</label><input id="dt" type="date"></div><div><label>जन्म समय</label><input id="tm" type="time" step="60"></div></div>
 <label>जन्म स्थान खोजो (शहर/गाँव, राज्य और देश के साथ)</label>
@@ -37,6 +45,12 @@ textarea{min-height:260px;font:12px/1.4 ui-monospace,monospace}
 </div>
 <div id="res" hidden>
 <div class="card"><h2 style="margin-top:0">AI के लिए कॉपी करने वाला टेक्स्ट</h2><button id="cp">AI के लिए कॉपी करो</button><textarea id="out" style="margin-top:8px"></textarea><div class="n">इसे किसी भी AI में पेस्ट करें।</div></div>
+<div class="card"><h2 style="margin-top:0">अब आगे क्या करें</h2><ol>
+<li>पेस्ट करके भेजने के बाद AI का जवाब पढ़ें। उसी चैट में आगे के सवाल पूछते रहें, क्योंकि AI के पास आपकी कुंडली का पूरा डेटा पहले से है। उदाहरण: "इसके लिए सबसे अच्छे महीने कौन से हैं?"</li>
+<li>अगर नई चैट शुरू करें, तो यह टेक्स्ट फिर से पेस्ट करना होगा।</li>
+<li>दूसरा विषय या सवाल जानना हो तो ऊपर जाकर विषय और सवाल बदलें, फिर सबमिट करके नया टेक्स्ट कॉपी करें।</li>
+<li>कोई नई जानकारी जोड़नी हो (जैसे सगाई हो गई या नौकरी बदली), तो उसे सीधे AI चैट में लिखें।</li>
+<li>दूसरे व्यक्ति की कुंडली के लिए ऊपर "+ नई प्रोफाइल" चुनें। पुरानी प्रोफाइल इसी ब्राउज़र में सेव रहती हैं।</li></ol></div>
 <h2>कुंडली चार्ट</h2>
 <div class="tabs" id="tabs"></div>
 <div class="tabs"><select id="vsel"></select><button id="sty">स्टाइल: नॉर्थ इंडियन</button></div>
@@ -45,6 +59,7 @@ textarea{min-height:260px;font:12px/1.4 ui-monospace,monospace}
 <div class="n" id="sr"></div>
 <h2>अष्टकवर्ग (लग्न से भाव 1–12)</h2><div class="w"><table id="av"></table></div>
 </div>
+<p class="n">यह टूल सिर्फ़ मार्गदर्शन के लिए है, गारंटी नहीं। स्वास्थ्य, कानूनी या पैसों के बड़े फैसले किसी विशेषज्ञ की सलाह से लें। कॉपी किए गए टेक्स्ट में आपकी जन्म जानकारी होती है, इसलिए उसे सिर्फ़ उसी AI में पेस्ट करें जिस पर आपको भरोसा हो। आपकी प्रोफाइल सिर्फ़ आपके अपने ब्राउज़र में सेव रहती हैं।</p>
 <script>
 const $=i=>document.getElementById(i),R=Math.PI/180,N=a=>(a%360+360)%360;
 const SG=['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
@@ -79,7 +94,7 @@ function V(L,n){const s=Math.floor(L/30),d=L%30,p=Math.floor(d*n/30),o=s%2==0,m=
 switch(n){case 1:return s;case 2:return o?(d<15?4:3):(d<15?3:4);case 3:return(s+4*p)%12;case 4:return(s+3*p)%12;case 7:return((o?s:s+6)+p)%12;case 9:return([s,s+8,s+4][m]+p)%12;case 10:return((o?s:s+8)+p)%12;case 12:return(s+p)%12;case 16:return([0,4,8][m]+p)%12;case 20:return([0,8,4][m]+p)%12;case 24:return((o?4:3)+p)%12;case 27:return([0,3,6,9][s%4]+p)%12;
 case 30:return o?(d<5?0:d<10?10:d<18?8:d<25?2:6):(d<5?1:d<12?5:d<20?11:d<25?9:7);case 40:return((o?0:6)+p)%12;case 45:return([0,4,8][m]+p)%12;case 60:return(s+p)%12}}
 const VN=[2,3,4,7,9,10,12,16,20,24,27,30,40,45,60];
-const CAT={daily:['आज का राशिफल (Today)',[],[1,4,7,10]],general:['सामान्य (General)',[9,10],[1,4,7,10]],love:['प्रेम (Love)',[9,7],[5,7,11,12]],marriage:['विवाह (Marriage)',[9,2],[2,7,8,11,12]],career:['करियर (Career)',[10,9],[2,6,10,11]],wealth:['धन (Wealth)',[2,9],[2,5,9,11]],health:['स्वास्थ्य (Health)',[9,30],[1,6,8,12]],education:['शिक्षा (Education)',[24,9],[4,5,9]],children:['संतान (Children)',[7,9],[2,5,9]]};
+const CAT={daily:['आज का राशिफल (Daily horoscope)',[],[1,4,7,10]],general:['सामान्य (General)',[9,10],[1,4,7,10]],love:['प्रेम (Love)',[9,7],[5,7,11,12]],marriage:['विवाह (Marriage)',[9,2],[2,7,8,11,12]],career:['करियर (Career)',[10,9],[2,6,10,11]],wealth:['धन (Wealth)',[2,9],[2,5,9,11]],health:['स्वास्थ्य (Health)',[9,30],[1,6,8,12]],education:['शिक्षा (Education)',[24,9],[4,5,9]],children:['संतान (Children)',[7,9],[2,5,9]]};
 const dm=d=>Math.floor(d)+"°"+String(Math.floor(d%1*60)).padStart(2,"0")+"'";
 const nk=l=>NK[Math.floor(l/(360/27))]+" "+(Math.floor(l%(360/27)/(360/108))+1);
 let S,mode='D1',sty='n';
@@ -120,12 +135,12 @@ tl.forEach(t=>{const b=document.createElement('button');b.textContent=t[1];b.dat
 $('vsel').add(new Option('अन्य D-चार्ट…',''));VN.forEach(n=>$('vsel').add(new Option('D'+n,'D'+n)));
 $('vsel').onchange=()=>{if($('vsel').value){mode=$('vsel').value;render()}};
 $('sty').onclick=()=>{sty=sty=='n'?'s':'n';$('sty').textContent='स्टाइल: '+(sty=='n'?'नॉर्थ इंडियन':'साउथ इंडियन');render()};
-$('go').onclick=()=>{const dt=$('dt').value,tm=$('tm').value;if(!dt||!tm){alert('जन्म तारीख और समय भरें');return}
-if(!$('lat').value||!$('lon').value||($('tz').value===''&&!ZN)){alert('पहले जन्म स्थान खोजकर चुनें');return}
+$('go').onclick=()=>{const dt=$('dt').value,tm=$('tm').value;if(!dt||!tm){alert(tt('जन्म तारीख और समय भरें'));return}
+if(!$('lat').value||!$('lon').value||($('tz').value===''&&!ZN)){alert(tt('पहले जन्म स्थान खोजकर चुनें'));return}
 const[y,m,d]=dt.split('-').map(Number),[hh,mm]=tm.split(':').map(Number),lat=+$('lat').value,lon=+$('lon').value,tz=ZN?zoff(ZN,y,m,d,hh,mm):+$('tz').value;$('tz').value=tz;
 const jd=JD(y,m,d,hh+mm/60-tz),now=Date.now(),jn=now/864e5+2440587.5;
 const L=pos(jd);S={y,m,d,tm,lat,lon,tz,jd,lon:L,asc:asc(jd,lat,lon),rt:retro(jd),tr:pos(jn),trt:retro(jn),birth:Date.UTC(y,m-1,d,hh,mm)-tz*36e5,now,place:ZP||'manual lat/lon'};S.av=avk();S.sr=sunrs();
-$('res').hidden=false;mode='D1';render();$('res').scrollIntoView()};
+$('res').hidden=false;mode='D1';render();saveP();$('how').open=false;$('res').scrollIntoView()};
 function cd(m){const L=S.lon,A=S.asc,as=Math.floor(A/30),mk=(f,t,r)=>L.map((l,i)=>({n:i,s:f(l),d:t?l%30:null,r:r?r[i]:false}));
 if(m=='D1')return{a:as,p:mk(l=>Math.floor(l/30),1,S.rt)};if(m=='Moon')return{a:Math.floor(L[1]/30),p:mk(l=>Math.floor(l/30),1,S.rt)};
 if(m=='Gochar')return{a:as,p:S.tr.map((l,i)=>({n:i,s:Math.floor(l/30),d:l%30,r:S.trt[i]}))};
@@ -184,7 +199,7 @@ const tn=ti==14?'Purnima':ti==29?'Amavasya':TT[ti%15],kn=kr==0?'Kimstughna':kr==
 const TS=`You are an expert Vedic astrologer. Do the chart analysis silently, using ONLY the chart data below. The person reading your answer knows nothing about astrology (they may be from the West), so your reply must NOT contain any astrology terms or jargon: no planets, houses, signs, nakshatras, dashas, yogas, transits or chart talk. Never explain how you reached the answer.\nFormat of your reply: (1) Start with a direct 1-2 sentence answer to the question. (2) Then, in plain everyday language, what the situation is likely to be and what is likely to happen. (3) Rough timing in months or years using calendar dates (for example "in the next 6-12 months"), never dasha names. (4) 3-5 simple, practical steps to do and what to avoid. (5) One short honest line that this is guidance, not a guarantee. Keep it short, warm and easy, in small paragraphs. Reply in the language of the question.\n\n`,
 TT2=`You are an expert Vedic astrologer (Jyotish). Use ONLY the chart data below (sidereal zodiac, Lahiri ayanamsa, whole-sign houses, Vimshottari dasha). Give a detailed reading on the topic and question at the end: analyse the relevant houses, their lords, karakas, the matching divisional charts, the current Mahadasha/Antardasha and gochar, give likely timing windows, practical remedies, and be honest about uncertainty. Reply in the language of the question.\n\n`;
 let o=$('ans').value=='tech'?TT2:TS;
-o+=`TOPIC: ${cat[0]}\nQUESTION / DETAILS FROM USER: ${$('q').value.trim()||'(none - give a general reading of this topic)'}\n\n`;
+o+=`TOPIC: ${lang=='en'?cat[0].replace(/^.*\((.*)\)$/,'$1'):cat[0]}\nANSWER LANGUAGE (overrides any other language instruction): ${lang=='en'?'English':'Hindi (simple everyday Hindi), unless the question is written in another language'}\nQUESTION / DETAILS FROM USER: ${$('q').value.trim()||'(none - give a general reading of this topic)'}\n\n`;
 o+=`== BIRTH ==\nName: ${$('nm').value||'-'}\nDate: ${S.y}-${String(S.m).padStart(2,'0')}-${String(S.d).padStart(2,'0')} ${S.tm} (UTC${S.tz>=0?'+':''}${S.tz}), ${S.place}, lat ${S.lat}, lon ${S.lon}\nToday: ${fd}\n\n`;
 o+=`== PANCHANG ==\nVara: ${dd}\nTithi: ${ti<15?'Shukla':'Krishna'} ${tn}\nMoon nakshatra: ${nk(L[1])} (pada)\nYoga: ${YG[Math.floor(N(L[0]+L[1])/(360/27))]}\nKarana: ${kn}\nSunrise: ${S.sr[0]}, Sunset: ${S.sr[1]} (local time)\n\n`;
 o+=`== D1 (Rashi chart) ==\nLagna: ${SG[as]} ${dm(A%30)}, nakshatra ${nk(A)}\n`+L.map((l,i)=>`- ${PF[i]}${S.rt[i]?' (R)':''}: ${SG[Math.floor(l/30)]} ${dm(l%30)}, ${nk(l)}, house ${(Math.floor(l/30)-as+12)%12+1}`).join('\n')+'\n\n';
@@ -195,4 +210,50 @@ o+=`== ASHTAKAVARGA (bindus per house 1-12 from Lagna; BAV of Sun..Saturn, then 
 $('out').value=o}
 $('cat').onchange=build;$('ans').onchange=build;$('q').oninput=build;$('nm').oninput=build;
 $('cp').onclick=()=>{const t=$('out');t.select();(navigator.clipboard?navigator.clipboard.writeText(t.value):Promise.reject()).catch(()=>document.execCommand('copy'));$('cp').textContent='कॉपी हो गया ✓';setTimeout(()=>$('cp').textContent='AI के लिए कॉपी करो',1800)};
+let lang='hi';
+const EN={'वैदिक कुंडली – AI के लिए':'Vedic Kundli for AI','नाम (वैकल्पिक)':'Name (optional)','जन्म तारीख और समय भरें':'Please enter date and time of birth','जन्म तारीख':'Date of birth','जन्म समय':'Time of birth',
+'जन्म स्थान खोजो (शहर/गाँव, राज्य और देश के साथ)':'Search place of birth (city/village, with state and country)','जैसे: Sikar, Rajasthan, India':'e.g. Sikar, Rajasthan, India','खोजो':'Search','विषय चुनें':'Choose a topic','जवाब कैसा चाहिए':'Answer style',
+'सीधा और सरल जवाब (ज्योतिष की भाषा के बिना)':'Simple, direct answer (no astrology jargon)','ज्योतिषीय विवरण के साथ':'With astrological details','आपका सवाल / आपकी जानकारी':'Your question / details',
+'जैसे: मेरी शादी कब होगी? अभी की दशा में क्या सावधानी रखूँ?':'e.g. When will I get married? What should I be careful about right now?','सबमिट करो':'Submit',
+'AI के लिए कॉपी करने वाला टेक्स्ट':'Text to copy for AI','AI के लिए कॉपी करो':'Copy for AI','कॉपी हो गया ✓':'Copied ✓','इसे किसी भी AI में पेस्ट करें।':'Paste this into any AI.','कुंडली चार्ट':'Birth chart',
+'D1 लग्न':'D1 Lagna','चंद्र कुंडली':'Moon chart','चंद्र':'Moon','गोचर (आज के ग्रह, लग्न से)':'Gochar (today\'s transits, from Lagna)','गोचर':'Gochar (Transit)','चलित (भाव चलित)':'Chalit (Bhava Chalit)','चलित':'Chalit',
+'D1 – लग्न कुंडली':'D1 – Lagna chart','अन्य D-चार्ट…':'Other D-charts…',' चार्ट':' chart','स्टाइल: ':'Style: ','नॉर्थ इंडियन':'North Indian','साउथ इंडियन':'South Indian',
+'अष्टकवर्ग (लग्न से भाव 1–12)':'Ashtakavarga (houses 1–12 from Lagna)','ग्रह':'Planet','राशि':'Sign','अंश':'Degree','भाव':'House','नक्षत्र-पद':'Nakshatra-pada','कुल':'Total',
+'सूर्योदय':'Sunrise','सूर्यास्त':'Sunset','(स्थानीय समय)':'(local time)',
+'आज का राशिफल (Daily horoscope)':'Daily horoscope','सामान्य (General)':'General','प्रेम (Love)':'Love','विवाह (Marriage)':'Marriage','करियर (Career)':'Career','धन (Wealth)':'Wealth','स्वास्थ्य (Health)':'Health','शिक्षा (Education)':'Education','संतान (Children)':'Children',
+'खोज रहा हूँ…':'Searching…','खोज यहाँ उपलब्ध नहीं है। लिस्ट से चुनें या lat/lon खुद भरें।':'Search is not available here.','जगह नहीं मिली। स्पेलिंग ठीक करें या राज्य/देश साथ लिखें।':'Place not found. Check the spelling or add the state/country.',
+'खोज की अनुमति नहीं मिली। लिस्ट से चुनें या lat/lon भरें।':'Search permission was not granted.','खोज नहीं हो पाई, थोड़ी देर बाद फिर कोशिश करें।':'Search failed, please try again in a moment.',
+'टाइमज़ोन खुद भरें':'timezone not found','मैप पर जाँचें':'Check on map','गाँव की लोकेशन अनुमानित हो सकती है, मैप पर एक बार देख लें।':'Village locations can be approximate; please check the map.','पहले जन्म स्थान खोजकर चुनें':'Please search and select the place of birth first'};
+Object.assign(EN,{'सेव की हुई प्रोफाइल':'Saved profiles','+ नई प्रोफाइल':'+ New profile','प्रोफाइल हटाओ':'Delete profile'});
+Object.assign(EN,{'इस टूल का उपयोग कैसे करें':'How to use this tool','अब आगे क्या करें':'What to do next',
+'जन्म तारीख, जन्म समय और जन्म स्थान भरें। जगह का नाम खोजकर सूची से सही जगह चुनें। समय जन्म प्रमाणपत्र के अनुसार डालें।':'Enter the date, time and place of birth. Search the place name and pick the correct match from the list. Use the time on the birth certificate.',
+'अपना विषय चुनें (प्रेम, करियर, आज का राशिफल आदि) और जवाब का तरीका चुनें। सीधा और सरल जवाब उन लोगों के लिए है जिन्हें ज्योतिष की जानकारी नहीं है।':'Choose your topic (love, career, daily horoscope, etc.) and the answer style. The simple answer style is best for people who do not know astrology.',
+'अपना सवाल साफ़ लिखें। एक बार में एक ही सवाल पूछें और अपनी स्थिति भी बताएँ, जैसे उम्र, रिश्ते की स्थिति या काम।':'Write your question clearly. Ask one question at a time and describe your situation, such as age, relationship status or work.',
+'सबमिट दबाएँ। सबसे ऊपर कॉपी करने वाला टेक्स्ट आ जाएगा।':'Press Submit. The text to copy will appear at the top.',
+'"AI के लिए कॉपी करो" दबाएँ, फिर किसी भी AI चैट (जैसे ChatGPT, Claude या Gemini) में पेस्ट करके भेज दें। जवाब वहीं मिलेगा।':'Press "Copy for AI", then paste it into any AI chat (such as ChatGPT, Claude or Gemini) and send it. Your answer will appear there.',
+'पेस्ट करके भेजने के बाद AI का जवाब पढ़ें। उसी चैट में आगे के सवाल पूछते रहें, क्योंकि AI के पास आपकी कुंडली का पूरा डेटा पहले से है। उदाहरण: "इसके लिए सबसे अच्छे महीने कौन से हैं?"':'After you paste and send, read the AI\'s answer. Keep asking follow-up questions in the same chat, because the AI already has your full chart data. Example: "Which months are best for this?"',
+'अगर नई चैट शुरू करें, तो यह टेक्स्ट फिर से पेस्ट करना होगा।':'If you start a new chat, paste this text again.',
+'दूसरा विषय या सवाल जानना हो तो ऊपर जाकर विषय और सवाल बदलें, फिर सबमिट करके नया टेक्स्ट कॉपी करें।':'To ask about another topic, go back up, change the topic and question, press Submit again and copy the new text.',
+'कोई नई जानकारी जोड़नी हो (जैसे सगाई हो गई या नौकरी बदली), तो उसे सीधे AI चैट में लिखें।':'To add new information (for example you got engaged or changed jobs), write it directly in the AI chat.',
+'दूसरे व्यक्ति की कुंडली के लिए ऊपर "+ नई प्रोफाइल" चुनें। पुरानी प्रोफाइल इसी ब्राउज़र में सेव रहती हैं।':'For another person, choose "+ New profile" at the top. Saved profiles stay in this browser.',
+'यह टूल सिर्फ़ मार्गदर्शन के लिए है, गारंटी नहीं। स्वास्थ्य, कानूनी या पैसों के बड़े फैसले किसी विशेषज्ञ की सलाह से लें। कॉपी किए गए टेक्स्ट में आपकी जन्म जानकारी होती है, इसलिए उसे सिर्फ़ उसी AI में पेस्ट करें जिस पर आपको भरोसा हो। आपकी प्रोफाइल सिर्फ़ आपके अपने ब्राउज़र में सेव रहती हैं।':'This tool is for guidance only, not a guarantee. For major health, legal or financial decisions, consult a qualified professional. The copied text contains your birth details, so paste it only into an AI you trust. Your profiles are saved only in your own browser.'});
+const KS=Object.keys(EN).sort((a,b)=>b.length-a.length),tr=x=>{for(const k of KS)if(x.includes(k))x=x.split(k).join(EN[k]);return x},tt=x=>lang=='en'?tr(x):x;
+const SO=[],tw=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let nd;
+while(nd=tw.nextNode()){const t=nd.parentNode.tagName;if(nd.nodeValue.trim()&&t!='SCRIPT'&&t!='STYLE')SO.push([nd,nd.nodeValue])}
+const PH=[$('pq'),$('q')].map(e=>[e,e.getAttribute('placeholder')]);
+function setLang(l){lang=l;SO.forEach(([n,o])=>n.nodeValue=l=='en'?tr(o):o);PH.forEach(([e,o])=>e.setAttribute('placeholder',l=='en'?tr(o):o));
+document.title=l=='en'?'Vedic Kundli for AI':'वैदिक कुंडली – AI के लिए';document.documentElement.lang=l;
+$('sty').textContent=tt('स्टाइल: '+(sty=='n'?'नॉर्थ इंडियन':'साउथ इंडियन'));$('cp').textContent=tt('AI के लिए कॉपी करो');$('lg').textContent=l=='en'?'हिन्दी':'English';if(S)render()}
+new MutationObserver(ms=>{if(lang!='en')return;const f=n=>{if(n.nodeType==3){if(n.parentNode&&n.parentNode.dataset&&n.parentNode.dataset.nt)return;const v=tr(n.nodeValue);if(v!=n.nodeValue)n.nodeValue=v}else n.childNodes.forEach(f)};ms.forEach(m=>m.type=='characterData'?f(m.target):m.addedNodes.forEach(f))}).observe(document.body,{childList:true,subtree:true,characterData:true});
+$('lg').onclick=()=>setLang(lang=='en'?'hi':'en');
+setLang('en');
+const PK='vk_profiles_v1',pl=()=>{try{return JSON.parse(localStorage.getItem(PK))||{}}catch(e){return{}}},pw=o=>{try{localStorage.setItem(PK,JSON.stringify(o))}catch(e){}};
+function pfRender(sel){const k=Object.keys(pl());$('pfw').hidden=!k.length;$('pf').innerHTML='';$('pf').add(new Option('+ नई प्रोफाइल',''));
+k.forEach(n=>{const o=new Option(n,n);o.dataset.nt=1;$('pf').add(o)});$('pf').value=sel||'';$('pd').hidden=!sel}
+function saveP(){const o=pl(),k=$('nm').value.trim()||(S.place.split(',')[0]+' '+$('dt').value);
+o[k]={nm:$('nm').value,dt:$('dt').value,tm:$('tm').value,pq:$('pq').value,lat:$('lat').value,lon:$('lon').value,tz:$('tz').value,ZN,ZP};pw(o);pfRender(k)}
+$('pf').onchange=()=>{const k=$('pf').value,p=pl()[k]||{};$('nm').value=p.nm||'';$('dt').value=p.dt||'';$('tm').value=p.tm||'';$('pq').value=p.pq||'';$('lat').value=p.lat||'';$('lon').value=p.lon||'';$('tz').value=p.tz||'';
+ZN=p.ZN||null;ZP=p.ZP||'';$('pm').textContent=ZP?ZP+' ('+p.lat+', '+p.lon+')':'';$('pd').hidden=!k};
+$('pd').onclick=()=>{const o=pl();delete o[$('pf').value];pw(o);$('pf').value='';$('pf').onchange();pfRender('')};
+pfRender('');
 </script></body></html>
