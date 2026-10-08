@@ -29,24 +29,22 @@ textarea{min-height:260px;font:12px/1.4 ui-monospace,monospace}
 <div class="r" style="grid-template-columns:1fr auto"><input id="pq" placeholder="जैसे: Sikar, Rajasthan, India"><button id="ps" style="margin:0;width:auto">खोजो</button></div>
 <div class="n" id="pm"></div>
 <select id="city" hidden></select>
-<div class="r r3"><div><label>अक्षांश (Lat)</label><input id="lat" type="number" step="0.01"></div><div><label>देशांतर (Lon)</label><input id="lon" type="number" step="0.01"></div><div><label>टाइमज़ोन (UTC+)</label><input id="tz" type="number" step="0.25"></div></div>
-<div class="n">भारत के लिए 5.5। विदेश में समर-टाइम हो तो टाइमज़ोन खुद ठीक करें।</div>
-<button id="go">कुंडली बनाओ</button>
+<input id="lat" type="hidden"><input id="lon" type="hidden"><input id="tz" type="hidden">
+<label>विषय चुनें</label><select id="cat"></select>
+<label>जवाब कैसा चाहिए</label><select id="ans"><option value="simple">सीधा और सरल जवाब (ज्योतिष की भाषा के बिना)</option><option value="tech">ज्योतिषीय विवरण के साथ</option></select>
+<label>आपका सवाल / आपकी जानकारी</label><textarea id="q" style="min-height:80px;font:inherit" placeholder="जैसे: मेरी शादी कब होगी? अभी की दशा में क्या सावधानी रखूँ?"></textarea>
+<button id="go">सबमिट करो</button>
 </div>
 <div id="res" hidden>
+<div class="card"><h2 style="margin-top:0">AI के लिए कॉपी करने वाला टेक्स्ट</h2><button id="cp">AI के लिए कॉपी करो</button><textarea id="out" style="margin-top:8px"></textarea><div class="n">इसे किसी भी AI में पेस्ट करें।</div></div>
+<h2>कुंडली चार्ट</h2>
 <div class="tabs" id="tabs"></div>
 <div class="tabs"><select id="vsel"></select><button id="sty">स्टाइल: नॉर्थ इंडियन</button></div>
 <h2 id="ct"></h2><div id="chart"></div>
 <div class="w"><table id="tb"></table></div>
 <div class="n" id="sr"></div>
 <h2>अष्टकवर्ग (लग्न से भाव 1–12)</h2><div class="w"><table id="av"></table></div>
-<h2>AI के लिए कॉपी</h2>
-<div class="card">
-<label>विषय चुनें</label><select id="cat"></select>
-<label>आपका सवाल / आपकी जानकारी (जवाब भी यहीं लिखें)</label><textarea id="q" style="min-height:80px;font:inherit" placeholder="जैसे: मेरी शादी कब होगी? अभी की दशा में क्या सावधानी रखूँ?"></textarea>
-<button id="cp">AI के लिए कॉपी करो</button>
-<label>कॉपी होने वाला टेक्स्ट</label><textarea id="out"></textarea>
-</div></div>
+</div>
 <script>
 const $=i=>document.getElementById(i),R=Math.PI/180,N=a=>(a%360+360)%360;
 const SG=['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
@@ -81,7 +79,7 @@ function V(L,n){const s=Math.floor(L/30),d=L%30,p=Math.floor(d*n/30),o=s%2==0,m=
 switch(n){case 1:return s;case 2:return o?(d<15?4:3):(d<15?3:4);case 3:return(s+4*p)%12;case 4:return(s+3*p)%12;case 7:return((o?s:s+6)+p)%12;case 9:return([s,s+8,s+4][m]+p)%12;case 10:return((o?s:s+8)+p)%12;case 12:return(s+p)%12;case 16:return([0,4,8][m]+p)%12;case 20:return([0,8,4][m]+p)%12;case 24:return((o?4:3)+p)%12;case 27:return([0,3,6,9][s%4]+p)%12;
 case 30:return o?(d<5?0:d<10?10:d<18?8:d<25?2:6):(d<5?1:d<12?5:d<20?11:d<25?9:7);case 40:return((o?0:6)+p)%12;case 45:return([0,4,8][m]+p)%12;case 60:return(s+p)%12}}
 const VN=[2,3,4,7,9,10,12,16,20,24,27,30,40,45,60];
-const CAT={general:['सामान्य (General)',[9,10],[1,4,7,10]],love:['प्रेम (Love)',[9,7],[5,7,11,12]],marriage:['विवाह (Marriage)',[9,2],[2,7,8,11,12]],career:['करियर (Career)',[10,9],[2,6,10,11]],wealth:['धन (Wealth)',[2,9],[2,5,9,11]],health:['स्वास्थ्य (Health)',[9,30],[1,6,8,12]],education:['शिक्षा (Education)',[24,9],[4,5,9]],children:['संतान (Children)',[7,9],[2,5,9]]};
+const CAT={daily:['आज का राशिफल (Today)',[],[1,4,7,10]],general:['सामान्य (General)',[9,10],[1,4,7,10]],love:['प्रेम (Love)',[9,7],[5,7,11,12]],marriage:['विवाह (Marriage)',[9,2],[2,7,8,11,12]],career:['करियर (Career)',[10,9],[2,6,10,11]],wealth:['धन (Wealth)',[2,9],[2,5,9,11]],health:['स्वास्थ्य (Health)',[9,30],[1,6,8,12]],education:['शिक्षा (Education)',[24,9],[4,5,9]],children:['संतान (Children)',[7,9],[2,5,9]]};
 const dm=d=>Math.floor(d)+"°"+String(Math.floor(d%1*60)).padStart(2,"0")+"'";
 const nk=l=>NK[Math.floor(l/(360/27))]+" "+(Math.floor(l%(360/27)/(360/108))+1);
 let S,mode='D1',sty='n';
@@ -183,7 +181,9 @@ function build(){if(!S)return;const cat=CAT[$('cat').value],A=S.asc,as=Math.floo
 const df=(m)=>{const c=cd(m);return c.p.map(p=>`- ${PF[p.n]}${p.r?' (R)':''}: ${SG[p.s]}${p.d!=null?' '+dm(p.d):''}, house ${hs(c,p)}`).join('\n')};
 const dd=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][new Date(S.y,S.m-1,S.d).getDay()],df2=N(L[1]-L[0]),ti=Math.floor(df2/12),kr=Math.floor(df2/6);
 const tn=ti==14?'Purnima':ti==29?'Amavasya':TT[ti%15],kn=kr==0?'Kimstughna':kr==57?'Shakuni':kr==58?'Chatushpada':kr==59?'Naga':KM[(kr-1)%7];
-let o=`You are an expert Vedic astrologer (Jyotish). Use ONLY the chart data below (sidereal zodiac, Lahiri ayanamsa, whole-sign houses, Vimshottari dasha). Give a detailed reading on the topic and question at the end: analyse the relevant houses, their lords, karakas, the matching divisional charts, the current Mahadasha/Antardasha and gochar, give likely timing windows, practical remedies, and be honest about uncertainty. Reply in the language of the question.\n\n`;
+const TS=`You are an expert Vedic astrologer. Do the chart analysis silently, using ONLY the chart data below. The person reading your answer knows nothing about astrology (they may be from the West), so your reply must NOT contain any astrology terms or jargon: no planets, houses, signs, nakshatras, dashas, yogas, transits or chart talk. Never explain how you reached the answer.\nFormat of your reply: (1) Start with a direct 1-2 sentence answer to the question. (2) Then, in plain everyday language, what the situation is likely to be and what is likely to happen. (3) Rough timing in months or years using calendar dates (for example "in the next 6-12 months"), never dasha names. (4) 3-5 simple, practical steps to do and what to avoid. (5) One short honest line that this is guidance, not a guarantee. Keep it short, warm and easy, in small paragraphs. Reply in the language of the question.\n\n`,
+TT2=`You are an expert Vedic astrologer (Jyotish). Use ONLY the chart data below (sidereal zodiac, Lahiri ayanamsa, whole-sign houses, Vimshottari dasha). Give a detailed reading on the topic and question at the end: analyse the relevant houses, their lords, karakas, the matching divisional charts, the current Mahadasha/Antardasha and gochar, give likely timing windows, practical remedies, and be honest about uncertainty. Reply in the language of the question.\n\n`;
+let o=$('ans').value=='tech'?TT2:TS;
 o+=`TOPIC: ${cat[0]}\nQUESTION / DETAILS FROM USER: ${$('q').value.trim()||'(none - give a general reading of this topic)'}\n\n`;
 o+=`== BIRTH ==\nName: ${$('nm').value||'-'}\nDate: ${S.y}-${String(S.m).padStart(2,'0')}-${String(S.d).padStart(2,'0')} ${S.tm} (UTC${S.tz>=0?'+':''}${S.tz}), ${S.place}, lat ${S.lat}, lon ${S.lon}\nToday: ${fd}\n\n`;
 o+=`== PANCHANG ==\nVara: ${dd}\nTithi: ${ti<15?'Shukla':'Krishna'} ${tn}\nMoon nakshatra: ${nk(L[1])} (pada)\nYoga: ${YG[Math.floor(N(L[0]+L[1])/(360/27))]}\nKarana: ${kn}\nSunrise: ${S.sr[0]}, Sunset: ${S.sr[1]} (local time)\n\n`;
@@ -191,8 +191,8 @@ o+=`== D1 (Rashi chart) ==\nLagna: ${SG[as]} ${dm(A%30)}, nakshatra ${nk(A)}\n`+
 const ms=Math.floor(L[1]/30);o+=`== Chandra Lagna ==\nMoon sign ${SG[ms]}; planets from Moon: `+L.map((l,i)=>`${PN[i]} H${(Math.floor(l/30)-ms+12)%12+1}`).join(', ')+'\n\n';
 o+=`== FOCUS HOUSES (D1) for ${cat[0]} ==\n`+cat[2].map(h=>{const s=(as+h-1)%12,lr=LORD[s],li=PF.indexOf(lr),ls=Math.floor(L[li]/30),oc=L.map((l,i)=>Math.floor(l/30)==s?PF[i]:'').filter(Boolean);return`- House ${h} ${SG[s]}: lord ${lr} in ${SG[ls]} (house ${(ls-as+12)%12+1}); occupants: ${oc.join(', ')||'none'}`}).join('\n')+'\n\n';
 cat[1].forEach(n=>{o+=`== D${n} (${SG[V(A,n)]} lagna) ==\n${df('D'+n)}\n\n`});
-o+=`== ASHTAKAVARGA (bindus per house 1-12 from Lagna; BAV of Sun..Saturn, then SAV) ==\n${S.av.txt}\n\n== CHALIT (equal-house) ==\n${df('Chalit')}\n\n== GOCHAR (transits today ${fd}, houses from natal Lagna) ==\n${df('Gochar')}\n\n== ${dasha()}\nNote: planets computed with approximate ephemeris; Rahu/Ketu are mean nodes.`;
+o+=`== ASHTAKAVARGA (bindus per house 1-12 from Lagna; BAV of Sun..Saturn, then SAV) ==\n${S.av.txt}\n\n== CHALIT (equal-house) ==\n${df('Chalit')}\n\n== GOCHAR (transits today ${fd}, houses from natal Lagna) ==\n${df('Gochar')}\nTransit houses from natal Moon: ${S.tr.map((l,i)=>PN[i]+' H'+((Math.floor(l/30)-ms+12)%12+1)).join(', ')}\n\n== ${dasha()}\nNote: planets computed with approximate ephemeris; Rahu/Ketu are mean nodes.`;
 $('out').value=o}
-$('cat').onchange=build;$('q').oninput=build;$('nm').oninput=build;
+$('cat').onchange=build;$('ans').onchange=build;$('q').oninput=build;$('nm').oninput=build;
 $('cp').onclick=()=>{const t=$('out');t.select();(navigator.clipboard?navigator.clipboard.writeText(t.value):Promise.reject()).catch(()=>document.execCommand('copy'));$('cp').textContent='कॉपी हो गया ✓';setTimeout(()=>$('cp').textContent='AI के लिए कॉपी करो',1800)};
 </script></body></html>
